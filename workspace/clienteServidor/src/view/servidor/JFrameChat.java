@@ -5,14 +5,18 @@
  */
 package view.servidor;
 
+import cliente.Socket_Cliente;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import servidor.Socket_Servidor;
+
 /**
  *
  * @author a1655086
  */
 public class JFrameChat extends javax.swing.JFrame {
     
-    public static int portaServidor;
-    public static int portaCliente;
 
     /**
      * Creates new form ServidorJFrame
@@ -43,6 +47,8 @@ public class JFrameChat extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         buttonConectar = new javax.swing.JButton();
         buttonEnviar = new javax.swing.JButton();
+        campoTextoIpCliente = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +105,16 @@ public class JFrameChat extends javax.swing.JFrame {
             }
         });
 
+        campoTextoIpCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        campoTextoIpCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoTextoIpClienteActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setText("IP");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,12 +132,16 @@ public class JFrameChat extends javax.swing.JFrame {
                         .addComponent(LigarServidor)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(campoTextoIpCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoTextoPortaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonConectar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 360, Short.MAX_VALUE)
+                        .addGap(141, 141, 141)
                         .addComponent(buttonEnviar)))
                 .addContainerGap())
         );
@@ -142,7 +162,9 @@ public class JFrameChat extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(campoTextoPortaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonConectar)
-                    .addComponent(buttonEnviar))
+                    .addComponent(buttonEnviar)
+                    .addComponent(campoTextoIpCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(33, 33, 33))
         );
 
@@ -162,14 +184,29 @@ public class JFrameChat extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEnviarActionPerformed
 
     private void LigarServidorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LigarServidorMouseClicked
-        portaServidor = Integer.valueOf(campoTextoPortaServidor.getText());
-        System.out.println(portaServidor);
+        int porta = Integer.valueOf(campoTextoPortaServidor.getText());
+        Socket_Servidor ss = new Socket_Servidor();
+        try {
+            ss.onServer(porta);
+        } catch (IOException ex) {
+            Logger.getLogger(JFrameChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_LigarServidorMouseClicked
 
     private void buttonConectarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonConectarMouseClicked
-        portaCliente = Integer.valueOf(campoTextoPortaCliente.getText());
-        System.out.println(portaCliente);
+        Socket_Cliente sc = new Socket_Cliente();
+        int porta = Integer.valueOf(campoTextoPortaCliente.getText());
+        String ip = campoTextoIpCliente.getText();
+        try {
+            sc.connectClient(porta, ip);
+        } catch (IOException ex) {
+            Logger.getLogger(JFrameChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_buttonConectarMouseClicked
+
+    private void campoTextoIpClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoIpClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTextoIpClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,10 +248,12 @@ public class JFrameChat extends javax.swing.JFrame {
     private javax.swing.JButton LigarServidor;
     private javax.swing.JButton buttonConectar;
     private javax.swing.JButton buttonEnviar;
+    public static javax.swing.JTextField campoTextoIpCliente;
     public static javax.swing.JTextField campoTextoPortaCliente;
     public static javax.swing.JTextField campoTextoPortaServidor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea textoEntrada;

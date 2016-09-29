@@ -1,8 +1,6 @@
 package servidor;
 
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -10,12 +8,11 @@ import view.servidor.JFrameChat;
 
 public class Socket_Servidor {
 
-    public static void main(String[] args) throws IOException {
-       
-        
-        ServerSocket servidor = new ServerSocket(4567);
+    public void onServer(int porta) throws IOException{
 
-        System.out.println("Porta " + (4567) + " aberta!");
+        ServerSocket servidor = new ServerSocket(porta);
+
+        System.out.println("Porta " + (porta) + " aberta!");
 
         Socket cliente = servidor.accept();
 

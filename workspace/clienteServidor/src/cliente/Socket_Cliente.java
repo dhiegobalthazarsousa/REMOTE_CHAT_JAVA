@@ -5,11 +5,12 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import view.servidor.JFrameChat;
 
 public class Socket_Cliente {
     public static void main(String[] args) throws UnknownHostException, IOException {
      
-        Socket cliente = new Socket("localhost", 2345);
+        Socket cliente = new Socket("localhost", 12345);
      
         System.out.println("O cliente se conectou ao servidor!");
      

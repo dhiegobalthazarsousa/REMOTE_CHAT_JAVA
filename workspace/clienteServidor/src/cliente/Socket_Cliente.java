@@ -5,7 +5,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import view.servidor.JFrameChat;
+import view.servidor.Chat;
 
 public class Socket_Cliente {
 

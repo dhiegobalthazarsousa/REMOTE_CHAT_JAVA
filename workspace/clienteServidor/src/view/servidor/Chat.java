@@ -5,6 +5,7 @@
  */
 package view.servidor;
 
+import bufferMensagem.Buffer;
 import cliente.Socket_Cliente;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -15,13 +16,15 @@ import servidor.Socket_Servidor;
  *
  * @author a1655086
  */
-public class JFrameChat extends javax.swing.JFrame {
+public class Chat extends javax.swing.JFrame {
     
-
+    Socket_Servidor ss = new Socket_Servidor();
+    Socket_Cliente sc = new Socket_Cliente();
     /**
      * Creates new form ServidorJFrame
      */
-    public JFrameChat() {
+    public Chat() {
+        
         initComponents();
     }
     
@@ -99,6 +102,11 @@ public class JFrameChat extends javax.swing.JFrame {
 
         buttonEnviar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         buttonEnviar.setText("Enviar");
+        buttonEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonEnviarMouseClicked(evt);
+            }
+        });
         buttonEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonEnviarActionPerformed(evt);
@@ -185,28 +193,32 @@ public class JFrameChat extends javax.swing.JFrame {
 
     private void LigarServidorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LigarServidorMouseClicked
         int porta = Integer.valueOf(campoTextoPortaServidor.getText());
-        Socket_Servidor ss = new Socket_Servidor();
         try {
             ss.onServer(porta);
         } catch (IOException ex) {
-            Logger.getLogger(JFrameChat.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_LigarServidorMouseClicked
 
     private void buttonConectarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonConectarMouseClicked
-        Socket_Cliente sc = new Socket_Cliente();
         int porta = Integer.valueOf(campoTextoPortaCliente.getText());
         String ip = campoTextoIpCliente.getText();
         try {
             sc.connectClient(porta, ip);
         } catch (IOException ex) {
-            Logger.getLogger(JFrameChat.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonConectarMouseClicked
 
     private void campoTextoIpClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoIpClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoIpClienteActionPerformed
+
+    private void buttonEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonEnviarMouseClicked
+        Buffer.trabalharMensagem(campoTextoIpCliente.getText());
+        
+        
+    }//GEN-LAST:event_buttonEnviarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -225,21 +237,23 @@ public class JFrameChat extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameChat().setVisible(true);
+                new Chat().setVisible(true);
             }
         });
     }

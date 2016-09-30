@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
-import view.servidor.JFrameChat;
+import view.servidor.Chat;
 
 public class Socket_Servidor {
 
-    public void onServer(int porta) throws IOException{
+    public void onServer(int porta) throws IOException {
 
         ServerSocket servidor = new ServerSocket(porta);
 

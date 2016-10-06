@@ -2,28 +2,68 @@ package cliente;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import view.servidor.Chat;
+import view.servidor.FrameServidor;
 
-public class Socket_Cliente {
+public class Socket_Cliente implements Runnable {
 
-    public void connectClient(int porta, String ip) throws IOException {
+    private int porta;
+    private String ip;
 
-        Socket cliente = new Socket(ip, porta);
+    public Socket_Cliente(String ip, int porta) {
+        this.porta = porta;
+        this.ip = ip;
+    }
 
-        System.out.println("O cliente se conectou ao servidor!");
+    public void ligarServidorCliente(int porta) {
+        try {
+            ServerSocket servidor = new ServerSocket(porta);
 
-        Scanner teclado = new Scanner(System.in);
+            System.out.println("Porta " + porta + " aberta!");
 
-        PrintStream saida = new PrintStream(cliente.getOutputStream());
+            Socket cliente = servidor.accept();
 
-        while (teclado.hasNextLine()) {
-            saida.println(teclado.nextLine());
+            Scanner entrada = new Scanner(cliente.getInputStream());
+
+            while (entrada.hasNextLine()) {
+                System.out.println("O cliente digitou: " + entrada.nextLine());
+            }
+
+            entrada.close();
+            servidor.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            Socket cliente = new Socket(ip, porta);
+
+            System.out.println("O cliente se conectou ao servidor!");
+
+            ligarServidorCliente(porta);
+
+            Scanner teclado = new Scanner(System.in);
+
+            PrintStream saida = new PrintStream(cliente.getOutputStream());
+
+            while (teclado.hasNextLine()) {
+                saida.println(teclado.nextLine());
+            }
+
+            saida.close();
+            teclado.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Impossivel conectar-se");
         }
 
-       saida.close();
-       teclado.close();
     }
 }

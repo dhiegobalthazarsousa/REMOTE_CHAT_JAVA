@@ -6,8 +6,8 @@
 package view.cliente;
 
 import cliente.Socket_Cliente;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintStream;
+import static java.lang.System.out;
 import servidor.Socket_Servidor;
 
 /**
@@ -42,12 +42,16 @@ public class FrameCliente extends javax.swing.JFrame {
         LigarServidor = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         campoTextoIpCliente = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        textoEnvio = new javax.swing.JTextArea();
         campoTextoPortaCliente = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         buttonConectar = new javax.swing.JButton();
         buttonEnviar = new javax.swing.JButton();
+        labelRespostaServidor = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textEnvio = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        campoConectados = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,10 +89,6 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
 
-        textoEnvio.setColumns(20);
-        textoEnvio.setRows(5);
-        jScrollPane2.setViewportView(textoEnvio);
-
         campoTextoPortaCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         campoTextoPortaCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +120,19 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
 
+        labelRespostaServidor.setText("LIGAR SERVIDOR");
+        labelRespostaServidor.setToolTipText("");
+
+        textEnvio.setColumns(20);
+        textEnvio.setRows(5);
+        jScrollPane2.setViewportView(textEnvio);
+
+        campoConectados.setColumns(20);
+        campoConectados.setRows(5);
+        jScrollPane3.setViewportView(campoConectados);
+
+        jLabel4.setText("Clientes Conectados");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,50 +140,71 @@ public class FrameCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(campoTextoPortaServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LigarServidor)
+                        .addComponent(buttonEnviar)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(campoTextoIpCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoTextoPortaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonConectar)
-                        .addGap(141, 141, 141)
-                        .addComponent(buttonEnviar)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(campoTextoIpCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoTextoPortaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonConectar)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelRespostaServidor)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoTextoPortaServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(LigarServidor)))
+                                .addGap(64, 64, 64)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addComponent(labelRespostaServidor)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
                     .addComponent(campoTextoPortaServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LigarServidor)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(LigarServidor))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonEnviar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(campoTextoPortaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonConectar)
-                    .addComponent(buttonEnviar)
                     .addComponent(campoTextoIpCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(33, 33, 33))
+                .addContainerGap())
         );
 
         pack();
@@ -180,6 +214,7 @@ public class FrameCliente extends javax.swing.JFrame {
         Socket_Servidor servidor = new Socket_Servidor(Integer.valueOf(campoTextoPortaServidor.getText()), "localhost");
         Thread t = new Thread(servidor);
         t.start();
+        LigarServidor.setVisible(false);
     }//GEN-LAST:event_LigarServidorMouseClicked
     
     private void campoTextoIpClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoIpClienteActionPerformed
@@ -194,10 +229,15 @@ public class FrameCliente extends javax.swing.JFrame {
         Socket_Cliente cliente = new Socket_Cliente(campoTextoIpCliente.getText(), Integer.valueOf(campoTextoPortaCliente.getText()));
         Thread t = new Thread(cliente);
         t.start();
+        buttonConectar.setVisible(false);
+        
     }//GEN-LAST:event_buttonConectarMouseClicked
 
     private void buttonEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonEnviarMouseClicked
 
+        Buffer b = new Buffer();
+        Thread t = new Thread(b);
+        t.start();
         
     }//GEN-LAST:event_buttonEnviarMouseClicked
     
@@ -248,15 +288,19 @@ public class FrameCliente extends javax.swing.JFrame {
     private javax.swing.JButton LigarServidor;
     private javax.swing.JButton buttonConectar;
     private javax.swing.JButton buttonEnviar;
+    public static javax.swing.JTextArea campoConectados;
     public static javax.swing.JTextField campoTextoIpCliente;
     public static javax.swing.JTextField campoTextoPortaCliente;
-    private javax.swing.JTextField campoTextoPortaServidor;
+    public static javax.swing.JTextField campoTextoPortaServidor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea textoEnvio;
+    private javax.swing.JScrollPane jScrollPane3;
+    public static javax.swing.JLabel labelRespostaServidor;
+    public static javax.swing.JTextArea textEnvio;
     public static javax.swing.JTextArea textoRecebimento;
     // End of variables declaration//GEN-END:variables
 }

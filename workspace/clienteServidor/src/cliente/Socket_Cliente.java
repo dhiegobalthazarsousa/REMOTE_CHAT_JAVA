@@ -11,30 +11,22 @@ import view.cliente.FrameCliente;
 public class Socket_Cliente implements Runnable {
 
     private int porta;
-    private String ip;
+    public static String ip;
+    public static Socket cliente;
 
     public Socket_Cliente(String ip, int porta) {
         this.porta = porta;
         this.ip = ip;
+        
     }
     
     @Override
     public void run() {
         try {
-            Socket cliente = new Socket(ip, porta);
-
+            cliente = new Socket(ip, porta);
+            FrameCliente.campoConectados.append("Cliente" + " " + ip + " " + "conectado!");
+    
             System.out.println("O cliente se conectou ao servidor!");
-
-            Scanner teclado = new Scanner(System.in);
-
-            PrintStream saida = new PrintStream(cliente.getOutputStream());
-
-            while (teclado.hasNextLine()) {
-                saida.println(teclado.nextLine());
-            }
-
-            saida.close();
-            teclado.close();
 
         } catch (Exception e) {
             e.printStackTrace();

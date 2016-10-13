@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import view.cliente.FrameCliente;
 
 public class Socket_Cliente implements Runnable {
 
@@ -16,37 +17,13 @@ public class Socket_Cliente implements Runnable {
         this.porta = porta;
         this.ip = ip;
     }
-
-    public void ligarServidorCliente(int porta) {
-        try {
-            ServerSocket servidor = new ServerSocket(porta);
-
-            System.out.println("Porta " + porta + " aberta!");
-
-            Socket cliente = servidor.accept();
-
-            Scanner entrada = new Scanner(cliente.getInputStream());
-
-            while (entrada.hasNextLine()) {
-                System.out.println("O cliente digitou: " + entrada.nextLine());
-            }
-
-            entrada.close();
-            servidor.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    
     @Override
     public void run() {
         try {
             Socket cliente = new Socket(ip, porta);
 
             System.out.println("O cliente se conectou ao servidor!");
-
-            ligarServidorCliente(porta);
 
             Scanner teclado = new Scanner(System.in);
 

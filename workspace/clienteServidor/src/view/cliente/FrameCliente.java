@@ -6,6 +6,8 @@
 package view.cliente;
 
 import cliente.Socket_Cliente;
+import java.util.ArrayList;
+import java.util.List;
 import servidor.Socket_Servidor;
 
 /**
@@ -17,6 +19,9 @@ public class FrameCliente extends javax.swing.JFrame {
     /**
      * Creates new form FrameCliente
      */
+    
+    public static String buffer;
+    
     public FrameCliente() {
         initComponents();
     }
@@ -38,7 +43,7 @@ public class FrameCliente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         campoTextoIpCliente = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        textoEntrada = new javax.swing.JTextArea();
+        textoEnvio = new javax.swing.JTextArea();
         campoTextoPortaCliente = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         buttonConectar = new javax.swing.JButton();
@@ -46,6 +51,7 @@ public class FrameCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        textoRecebimento.setEditable(false);
         textoRecebimento.setColumns(20);
         textoRecebimento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         textoRecebimento.setRows(5);
@@ -79,9 +85,9 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
 
-        textoEntrada.setColumns(20);
-        textoEntrada.setRows(5);
-        jScrollPane2.setViewportView(textoEntrada);
+        textoEnvio.setColumns(20);
+        textoEnvio.setRows(5);
+        jScrollPane2.setViewportView(textoEnvio);
 
         campoTextoPortaCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         campoTextoPortaCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +181,7 @@ public class FrameCliente extends javax.swing.JFrame {
         Thread t = new Thread(servidor);
         t.start();
     }//GEN-LAST:event_LigarServidorMouseClicked
-    /*
+    
     private void campoTextoIpClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoIpClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoIpClienteActionPerformed
@@ -183,7 +189,7 @@ public class FrameCliente extends javax.swing.JFrame {
     private void campoTextoPortaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoPortaClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoPortaClienteActionPerformed
-*/
+
     private void buttonConectarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonConectarMouseClicked
         Socket_Cliente cliente = new Socket_Cliente(campoTextoIpCliente.getText(), Integer.valueOf(campoTextoPortaCliente.getText()));
         Thread t = new Thread(cliente);
@@ -194,7 +200,7 @@ public class FrameCliente extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_buttonEnviarMouseClicked
-    /*
+    
     private void buttonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnviarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonEnviarActionPerformed
@@ -202,7 +208,7 @@ public class FrameCliente extends javax.swing.JFrame {
     private void campoTextoPortaServidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoPortaServidorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoPortaServidorActionPerformed
-*/
+
     /**
      * @param args the command line arguments
      */
@@ -250,7 +256,7 @@ public class FrameCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea textoEntrada;
-    private javax.swing.JTextArea textoRecebimento;
+    private javax.swing.JTextArea textoEnvio;
+    public static javax.swing.JTextArea textoRecebimento;
     // End of variables declaration//GEN-END:variables
 }

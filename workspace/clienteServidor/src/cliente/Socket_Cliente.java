@@ -24,7 +24,6 @@ public class Socket_Cliente implements Runnable {
     public void run() {
         try {
             cliente = new Socket(ip, porta);
-            FrameCliente.campoConectados.append("Cliente" + " " + ip + " " + "conectado!");
     
             System.out.println("O cliente se conectou ao servidor!");
 

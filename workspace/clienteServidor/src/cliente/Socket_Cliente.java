@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import view.servidor.FrameServidor;
 
 public class Socket_Cliente implements Runnable {
 

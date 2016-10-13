@@ -5,7 +5,6 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
-import view.servidor.FrameServidor;
 
 public class Socket_Servidor implements Runnable {
 
@@ -21,7 +20,7 @@ public class Socket_Servidor implements Runnable {
         try {
             Socket cliente = new Socket(ip, porta);
 
-            System.out.println("Cliente do Servidor ligado!");
+            System.out.println("Cliente conectado!");
 
             Scanner teclado = new Scanner(System.in);
 
@@ -36,7 +35,7 @@ public class Socket_Servidor implements Runnable {
             
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Impossivel ligar cliente do servidor");
+            System.out.println("Impossivel conectar cliente");
         }
     }
 

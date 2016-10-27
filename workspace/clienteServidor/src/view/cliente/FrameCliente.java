@@ -6,8 +6,10 @@
 package view.cliente;
 
 import cliente.Socket_Cliente;
+import java.awt.event.KeyEvent;
 import java.io.PrintStream;
 import static java.lang.System.out;
+import javax.swing.KeyStroke;
 import servidor.Socket_Servidor;
 
 /**
@@ -19,9 +21,8 @@ public class FrameCliente extends javax.swing.JFrame {
     /**
      * Creates new form FrameCliente
      */
-    
     public static String buffer;
-    
+
     public FrameCliente() {
         initComponents();
     }
@@ -58,7 +59,7 @@ public class FrameCliente extends javax.swing.JFrame {
         textoRecebimento.setEditable(false);
         textoRecebimento.setColumns(20);
         textoRecebimento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        textoRecebimento.setRows(5);
+        textoRecebimento.setRows(10);
         jScrollPane1.setViewportView(textoRecebimento);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -124,7 +125,12 @@ public class FrameCliente extends javax.swing.JFrame {
         labelRespostaServidor.setToolTipText("");
 
         textEnvio.setColumns(20);
-        textEnvio.setRows(5);
+        textEnvio.setRows(1);
+        textEnvio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textEnvioKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(textEnvio);
 
         campoConectados.setColumns(20);
@@ -187,14 +193,14 @@ public class FrameCliente extends javax.swing.JFrame {
                     .addComponent(LigarServidor))
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonEnviar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
@@ -211,12 +217,12 @@ public class FrameCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 /**/
     private void LigarServidorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LigarServidorMouseClicked
-        Socket_Servidor servidor = new Socket_Servidor(Integer.valueOf(campoTextoPortaServidor.getText()), "localhost");
+        Socket_Servidor servidor = new Socket_Servidor(Integer.valueOf(campoTextoPortaServidor.getText()));
         Thread t = new Thread(servidor);
         t.start();
         LigarServidor.setVisible(false);
     }//GEN-LAST:event_LigarServidorMouseClicked
-    
+
     private void campoTextoIpClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoIpClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoIpClienteActionPerformed
@@ -230,17 +236,15 @@ public class FrameCliente extends javax.swing.JFrame {
         Thread t = new Thread(cliente);
         t.start();
         buttonConectar.setVisible(false);
-        
+
     }//GEN-LAST:event_buttonConectarMouseClicked
 
     private void buttonEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonEnviarMouseClicked
 
-        Buffer b = new Buffer();
-        Thread t = new Thread(b);
-        t.start();
-        
+        enviar();
+
     }//GEN-LAST:event_buttonEnviarMouseClicked
-    
+
     private void buttonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnviarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonEnviarActionPerformed
@@ -248,6 +252,20 @@ public class FrameCliente extends javax.swing.JFrame {
     private void campoTextoPortaServidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoPortaServidorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoPortaServidorActionPerformed
+
+    private void textEnvioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEnvioKeyPressed
+        int key = evt.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            enviar();
+        }
+
+    }//GEN-LAST:event_textEnvioKeyPressed
+
+    private void enviar() {
+        Buffer b = new Buffer();
+        Thread t = new Thread(b);
+        t.start();
+    }
 
     /**
      * @param args the command line arguments

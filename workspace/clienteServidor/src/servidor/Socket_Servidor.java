@@ -9,11 +9,9 @@ import view.cliente.FrameCliente;
 public class Socket_Servidor implements Runnable {
 
     private int porta;
-    private String ip;
 
-    public Socket_Servidor(int porta, String ip) {
+    public Socket_Servidor(int porta) {
         this.porta = porta;
-        this.ip = ip;
     }
 
     @Override
@@ -24,18 +22,23 @@ public class Socket_Servidor implements Runnable {
             FrameCliente.labelRespostaServidor.setText("Porta" + " " + porta + " " + "aberta");
 
             System.out.println("Porta " + porta + " aberta!");
+            
+            
 
             Socket cliente = servidor.accept();
 
-            System.out.println("Nova conex�o com o cliente " + cliente.getInetAddress().getHostAddress());
-            FrameCliente.campoConectados.append("Cliente" + " " + cliente.getInetAddress() + "conectado!");
+            System.out.println("Nova conexão com o cliente " + cliente.getInetAddress().getHostAddress());
+            FrameCliente.campoConectados.append("Cliente" + " " + cliente.getInetAddress().getHostName() + " " + "conectado!");
 
             Scanner entrada = new Scanner(cliente.getInputStream());
 
             while (entrada.hasNextLine()) {
                 String mensagem = entrada.nextLine();
-                System.out.println("O cliente digitou: " + mensagem);
-                FrameCliente.textoRecebimento.append(cliente.getInetAddress().getHostAddress() + ": " + mensagem + "\n");
+                if (!mensagem.equals("")) {
+                    System.out.println("O cliente digitou: " + mensagem);
+                    FrameCliente.textoRecebimento.append(cliente.getInetAddress().getHostAddress() + ": " + mensagem + "\n");
+                }
+
             }
 
             entrada.close();

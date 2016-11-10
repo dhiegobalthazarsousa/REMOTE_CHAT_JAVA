@@ -5,7 +5,8 @@
  */
 package view.cliente;
 
-import cliente.Socket_Cliente;
+import cliente.SocketClienteExterno;
+import cliente.SocketClienteInterno;
 import java.awt.event.KeyEvent;
 import java.io.PrintStream;
 import static java.lang.System.out;
@@ -25,6 +26,9 @@ public class FrameCliente extends javax.swing.JFrame {
 
     public FrameCliente() {
         initComponents();
+        Socket_Servidor ss = new Socket_Servidor();
+        Thread t = new Thread(ss);
+        t.start();
     }
 
     /**
@@ -38,9 +42,6 @@ public class FrameCliente extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         textoRecebimento = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        campoTextoPortaServidor = new javax.swing.JTextField();
-        LigarServidor = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         campoTextoIpCliente = new javax.swing.JTextField();
         campoTextoPortaCliente = new javax.swing.JTextField();
@@ -61,24 +62,6 @@ public class FrameCliente extends javax.swing.JFrame {
         textoRecebimento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         textoRecebimento.setRows(10);
         jScrollPane1.setViewportView(textoRecebimento);
-
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel1.setText("PORT");
-
-        campoTextoPortaServidor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        campoTextoPortaServidor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoTextoPortaServidorActionPerformed(evt);
-            }
-        });
-
-        LigarServidor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        LigarServidor.setText("Ligar");
-        LigarServidor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LigarServidorMouseClicked(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("IP");
@@ -121,7 +104,6 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
 
-        labelRespostaServidor.setText("LIGAR SERVIDOR");
         labelRespostaServidor.setToolTipText("");
 
         textEnvio.setColumns(20);
@@ -166,13 +148,7 @@ public class FrameCliente extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelRespostaServidor)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(campoTextoPortaServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(LigarServidor)))
+                                    .addComponent(labelRespostaServidor))
                                 .addGap(64, 64, 64)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -186,12 +162,7 @@ public class FrameCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelRespostaServidor)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(campoTextoPortaServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LigarServidor))
-                .addGap(19, 19, 19)
+                .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
@@ -203,7 +174,7 @@ public class FrameCliente extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonEnviar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(campoTextoPortaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,13 +186,6 @@ public class FrameCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-/**/
-    private void LigarServidorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LigarServidorMouseClicked
-        Socket_Servidor servidor = new Socket_Servidor(Integer.valueOf(campoTextoPortaServidor.getText()));
-        Thread t = new Thread(servidor);
-        t.start();
-        LigarServidor.setVisible(false);
-    }//GEN-LAST:event_LigarServidorMouseClicked
 
     private void campoTextoIpClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoIpClienteActionPerformed
         // TODO add your handling code here:
@@ -232,7 +196,7 @@ public class FrameCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_campoTextoPortaClienteActionPerformed
 
     private void buttonConectarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonConectarMouseClicked
-        Socket_Cliente cliente = new Socket_Cliente(campoTextoIpCliente.getText(), Integer.valueOf(campoTextoPortaCliente.getText()));
+        SocketClienteInterno cliente = new SocketClienteInterno(campoTextoIpCliente.getText(), Integer.valueOf(campoTextoPortaCliente.getText()));
         Thread t = new Thread(cliente);
         t.start();
         buttonConectar.setVisible(false);
@@ -249,10 +213,6 @@ public class FrameCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonEnviarActionPerformed
 
-    private void campoTextoPortaServidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoPortaServidorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTextoPortaServidorActionPerformed
-
     private void textEnvioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEnvioKeyPressed
         int key = evt.getKeyCode();
         if (key == KeyEvent.VK_ENTER) {
@@ -262,7 +222,7 @@ public class FrameCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_textEnvioKeyPressed
 
     private void enviar() {
-        Buffer b = new Buffer();
+        BufferSaida b = new BufferSaida();
         Thread t = new Thread(b);
         t.start();
     }
@@ -303,14 +263,11 @@ public class FrameCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton LigarServidor;
     private javax.swing.JButton buttonConectar;
     private javax.swing.JButton buttonEnviar;
     public static javax.swing.JTextArea campoConectados;
     public static javax.swing.JTextField campoTextoIpCliente;
     public static javax.swing.JTextField campoTextoPortaCliente;
-    public static javax.swing.JTextField campoTextoPortaServidor;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

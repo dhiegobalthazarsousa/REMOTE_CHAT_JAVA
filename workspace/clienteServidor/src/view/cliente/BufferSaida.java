@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.cliente;
 
-import static cliente.SocketClienteExterno.cliente;
+import static cliente.SocketClienteInterno.cliente;
 import java.io.PrintStream;
 
 /**
  *
  * @author a1655086
  */
-public class Buffer implements Runnable{
+public class BufferSaida implements Runnable{
 
     @Override
     public void run() {

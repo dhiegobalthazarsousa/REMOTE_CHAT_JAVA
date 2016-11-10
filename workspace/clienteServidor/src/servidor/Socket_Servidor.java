@@ -1,6 +1,6 @@
 package servidor;
 
-import static cliente.Socket_Cliente.ip;
+import cliente.SocketClienteInterno;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -8,20 +8,15 @@ import view.cliente.FrameCliente;
 
 public class Socket_Servidor implements Runnable {
 
-    private int porta;
-
-    public Socket_Servidor(int porta) {
-        this.porta = porta;
-    }
-
     @Override
     public void run() {
         try {
-            ServerSocket servidor = new ServerSocket(porta);
+            
+            ServerSocket servidor = new ServerSocket(12345);
 
-            FrameCliente.labelRespostaServidor.setText("Porta" + " " + porta + " " + "aberta");
+            FrameCliente.labelRespostaServidor.setText("Porta aberta!");
 
-            System.out.println("Porta " + porta + " aberta!");
+            System.out.println("Porta aberta!");
             
             
 
@@ -29,6 +24,10 @@ public class Socket_Servidor implements Runnable {
 
             System.out.println("Nova conexão com o cliente " + cliente.getInetAddress().getHostAddress());
             FrameCliente.campoConectados.append("Cliente" + " " + cliente.getInetAddress().getHostName() + " " + "conectado!");
+            
+            SocketClienteInterno sci = new SocketClienteInterno(cliente.getInetAddress().getHostName(), 12346);
+            Thread t = new Thread(sci);
+            t.start();
 
             Scanner entrada = new Scanner(cliente.getInputStream());
 

@@ -1,20 +1,14 @@
 package cliente;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Scanner;
-import view.cliente.FrameCliente;
 
-public class Socket_Cliente implements Runnable {
+public class SocketClienteExterno implements Runnable {
 
     private int porta;
     public static String ip;
     public static Socket cliente;
 
-    public Socket_Cliente(String ip, int porta) {
+    public SocketClienteExterno(String ip, int porta) {
         this.porta = porta;
         this.ip = ip;
         

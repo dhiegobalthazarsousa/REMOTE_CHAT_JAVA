@@ -13,6 +13,7 @@ public class BufferSaida implements Runnable{
     public void run() {
         try{
             PrintStream saida = new PrintStream(cliente.getOutputStream());
+            FrameCliente.textoRecebimento.append("Eu digitei: " + FrameCliente.textEnvio.getText());
             saida.println(FrameCliente.textEnvio.getText());
             FrameCliente.textEnvio.setText("");
             

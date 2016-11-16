@@ -14,7 +14,7 @@ public class Socket_Servidor implements Runnable {
             
             ServerSocket servidor = new ServerSocket(12345);
 
-            FrameCliente.labelRespostaServidor.setText("Porta aberta!");
+            FrameCliente.labelRespostaServidor.setText("Porta" +12345+ "aberta!");
 
             System.out.println("Porta aberta!");
             
